@@ -1,5 +1,5 @@
-FROM openjdk:21-rc
+FROM openjdk:17
 
-COPY target/spring-boot-security-jwt-0.0.1-SNAPSHOT.jar /app/spring-boot-security-jwt-0.0.1-SNAPSHOT.jar
+COPY target/spring-jwt.jar /app/spring-jwt.jar
 
-CMD ["java","-jar","/app/spring-boot-security-jwt-0.0.1-SNAPSHOT.jar"]
+CMD ["java","-jar","/app/spring-jwt.jar"]
