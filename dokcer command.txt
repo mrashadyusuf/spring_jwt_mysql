@@ -1,6 +1,4 @@
-mvn clean 
-mvn package 
-mvn install 
+mvn clean package install
 
 docker build --tag spring-jwt:1.0 .
 
