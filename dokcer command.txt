@@ -2,7 +2,7 @@
 docker network create java_network
 
 //create container mysql_container
-docker run --name mysql_container -p 3306:3306 -e MYSQL_ROOT_PASSWORD=admin --network java_network -d mysql:latest
+docker run --name mysql_container -p 3307:3306 -e MYSQL_ROOT_PASSWORD=admin --network java_network -d mysql:8.0.35
 
 //compile  jar file for spring project
 mvn clean package install
@@ -15,6 +15,7 @@ docker container create --name spring-jwt -p 8080:8080 -e MYSQL_HOST=mysql_conta
 //or to combine craete and run
 docker run --name spring-jwt --network java_network -e MYSQL_HOST=mysql_container -e MYSQL_PORT=3306 -e MYSQL_USERNAME=root -e MYSQL_PASSWORD=admin -p 8080:8080 -d spring-jwt:1.0
 
+//jika belum connect ke java_network, jika melalui command di atas sudah langsung connect
 docker network connect java_network spring-jwt
 
 docker container inspect spring-jwt
