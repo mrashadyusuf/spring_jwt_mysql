@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  mysql:
+    container_name: mysql_container
+    image: mysql:8.0.35
+    ports:
+      - 3307:3306
+    networks:
+      - java_network
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_DATABASE=testdb_spring  
+  spring-jwt:
+    container_name: spring-jwt
+    image: spring-jwt:1.0
+    ports:
+      - 8080:8080
+    networks:
+      - java_network
+    depends_on:
+      - mysql
+    restart: on-failure
+    environment:
+      - MYSQL_HOST=mysql_container
+      - MYSQL_PORT=3306
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWORD=admin
+networks:
+  java_network:
+    name: java_network
