@@ -204,3 +204,9 @@ Run both Back-end & Front-end in one place:
 > [Integrate React.js with Spring Boot Rest API](https://bezkoder.com/integrate-reactjs-spring-boot/)
 
 > [Integrate Vue.js with Spring Boot Rest API](https://bezkoder.com/integrate-vue-spring-boot/)
+
+
+-----------------------------------------------
+- just add the db manually example testdb_spring, and run the spring
+- insert role on line 66-70
+- check the postman collection, for more login and signup
