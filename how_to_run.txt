@@ -1,0 +1,14 @@
+how to run:
+- import postman collection
+- adjust src/main/resources/application.properties
+- "mvn spring-boot:run"
+- in database add:
+    INSERT INTO roles(name) VALUES('ROLE_USER');
+    INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
+    INSERT INTO roles(name) VALUES('ROLE_ADMIN');
+
+how to build:
+- mvn clean package    
+- docker compose build --no-cache
+- docker compose up -d
+- add the roles data in database
