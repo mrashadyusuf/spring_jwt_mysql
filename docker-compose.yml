@@ -12,7 +12,9 @@ services:
       - MYSQL_DATABASE=testdb_spring  
   spring-jwt:
     container_name: spring-jwt
-    image: spring-jwt:1.0
+    build:
+      context: .
+      dockerfile: Dockerfile  # Path to your Dockerfile
     ports:
       - 8080:8080
     networks:
