@@ -19,11 +19,11 @@ public class SpringBootSecurityJwtApplication {
 
 	@PostConstruct
 	private void postConstruct() {
-		System.out.println("MYSQL_HOST: " + env.getProperty("MYSQL_HOST"));
-		System.out.println("MYSQL_USERNAME: " + env.getProperty("MYSQL_USERNAME"));
-		System.out.println("MYSQL_PASSWORD: " + env.getProperty("MYSQL_PASSWORD"));
+		System.out.println("POSTGRESQL_HOST: " + env.getProperty("POSTGRESQL_HOST"));
+		System.out.println("POSTGRESQL_USERNAME: " + env.getProperty("POSTGRESQL_USERNAME"));
+		System.out.println("POSTGRESQL_PASSWORD: " + env.getProperty("POSTGRESQL_PASSWORD"));
 		System.out.println("name: " + env.getProperty("name"));
-		System.out.println("MYSQL_PORT: " + env.getProperty("MYSQL_PORT"));
+		System.out.println("POSTGRESQL_PORT: " + env.getProperty("POSTGRESQL_PORT"));
 	}
 
 

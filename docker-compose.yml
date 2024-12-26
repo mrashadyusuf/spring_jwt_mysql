@@ -1,30 +1,34 @@
 version: "3.8"
 services:
-  mysql:
-    container_name: mysql_container
-    image: mysql:8.0.35
+  postgres:
+    container_name: postgres_container
+    image: postgres
     ports:
-      - 3307:3306
+      - "5433:5432"
     networks:
       - java_network
     environment:
-      - MYSQL_ROOT_PASSWORD=admin
-      - MYSQL_DATABASE=testdb_spring  
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=test_db_spring
+
   spring-jwt:
     container_name: spring-jwt
-    image: spring-jwt:1.0
+    build:
+      context: .
+      dockerfile: dockerfile
     ports:
-      - 8080:8080
+      - "8080:8080"
     networks:
       - java_network
     depends_on:
-      - mysql
+      - postgres
     restart: on-failure
     environment:
-      - MYSQL_HOST=mysql_container
-      - MYSQL_PORT=3306
-      - MYSQL_USERNAME=root
-      - MYSQL_PASSWORD=admin
+      - POSTGRESQL_HOST=postgres_container
+      - POSTGRESQL_PORT=5432
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=root
 networks:
   java_network:
     name: java_network
