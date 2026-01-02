@@ -12,3 +12,8 @@ how to build:
 - docker compose build --no-cache
 - docker compose up -d
 - add the roles data in database
+
+
+--optional
+- add database in testdb_spring.sql
+- and spring jwt postman collection.json
