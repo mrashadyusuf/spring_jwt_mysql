@@ -1,0 +1,76 @@
+spring-boot-spring-security-jwt-authentication/
+├── .gitignore
+├── docker-compose.yml
+├── dockerfile
+├── dokcer command.txt
+├── how_to_run.txt
+├── mvnw
+├── mvnw.cmd
+├── pom.xml
+├── README.md
+├── Spring JWT.postman_collection.json
+├── spring-boot-jwt-authentication-spring-security-architecture.png
+├── spring-boot-jwt-authentication-spring-security-flow.png
+├── spring-boot-refresh-token-jwt-example-flow.png
+├── testdb_spring-202601022135temp.sql
+│
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/
+│   │   │       └── example/
+│   │   │           └── springjwt/
+│   │   │               ├── SpringBootSecurityJwtApplication.java
+│   │   │               │
+│   │   │               ├── controllers/
+│   │   │               │   ├── AuthController.java
+│   │   │               │   └── TestController.java
+│   │   │               │
+│   │   │               ├── models/
+│   │   │               │   ├── ERole.java
+│   │   │               │   ├── RefreshToken.java
+│   │   │               │   ├── Role.java
+│   │   │               │   └── User.java
+│   │   │               │
+│   │   │               ├── payload/
+│   │   │               │   ├── request/
+│   │   │               │   │   ├── LoginRequest.java
+│   │   │               │   │   ├── SignupRequest.java
+│   │   │               │   │   └── TokenRefreshRequest.java
+│   │   │               │   │
+│   │   │               │   └── response/
+│   │   │               │       ├── JwtResponse.java
+│   │   │               │       ├── MessageResponse.java
+│   │   │               │       └── TokenRefreshResponse.java
+│   │   │               │
+│   │   │               ├── repository/
+│   │   │               │   ├── RoleRepository.java
+│   │   │               │   ├── UserRepository.java
+│   │   │               │   └── RefreshTokenRepository.java
+│   │   │               │
+│   │   │               ├── security/
+│   │   │               │   ├── jwt/
+│   │   │               │   │   ├── AuthEntryPointJwt.java
+│   │   │               │   │   ├── AuthTokenFilter.java
+│   │   │               │   │   └── JwtUtils.java
+│   │   │               │   │
+│   │   │               │   ├── services/
+│   │   │               │   │   ├── UserDetailsImpl.java
+│   │   │               │   │   └── UserDetailsServiceImpl.java
+│   │   │               │   │
+│   │   │               │   └── WebSecurityConfig.java
+│   │   │               │
+│   │   │               └── services/
+│   │   │                   ├── RefreshTokenService.java
+│   │   │                   └── UserService.java
+│   │   │
+│   │   └── resources/
+│   │       ├── application.properties
+│   │       └── schema.sql
+│   │
+│   └── test/
+│       └── java/
+│           └── com/example/springjwt/
+│               └── SpringBootSecurityJwtApplicationTests.java
+│
+└── target/
