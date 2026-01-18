@@ -1,10 +1,14 @@
 package com.bezkoder.springjwt.controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bezkoder.springjwt.models.Tutorial;
 import com.bezkoder.springjwt.repository.TutorialRepository;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("/api")
@@ -28,25 +36,38 @@ public class TutorialController {
     @Autowired
     TutorialRepository tutorialRepository;
 
-    @GetMapping("/tutorials")
-    public ResponseEntity<List<Tutorial>> getAllTutorials(@RequestParam(required = false) String title) {
-        try {
-            List<Tutorial> tutorials = new ArrayList<Tutorial>();
+@GetMapping("/tutorials")
+public ResponseEntity<Map<String, Object>> getAllTutorials(
+        @RequestParam(required = false) String title,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size
+) {
+    try {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Tutorial> pageTutorials;
 
-            if (title == null)
-                tutorialRepository.findAll().forEach(tutorials::add);
-            else
-                tutorialRepository.findByTitleContaining(title).forEach(tutorials::add);
-
-            if (tutorials.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-
-            return new ResponseEntity<>(tutorials, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        if (title == null) {
+            pageTutorials = tutorialRepository.findAll(pageable);
+        } else {
+            pageTutorials = tutorialRepository.findByTitleContaining(title, pageable);
         }
+
+        if (pageTutorials.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", pageTutorials.getContent());
+        response.put("currentPage", pageTutorials.getNumber());
+        response.put("totalItems", pageTutorials.getTotalElements());
+        response.put("totalPages", pageTutorials.getTotalPages());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
+    } catch (Exception e) {
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+}
 
     @GetMapping("/tutorials/{id}")
     public ResponseEntity<Tutorial> getTutorialById(@PathVariable("id") long id) {
