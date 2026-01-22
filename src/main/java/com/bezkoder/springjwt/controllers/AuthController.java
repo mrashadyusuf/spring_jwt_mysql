@@ -56,10 +56,12 @@ public class AuthController {
 
     Authentication authentication = authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+      System.out.println("authentication "+authentication); //pengecekan username dan password
 
-    SecurityContextHolder.getContext().setAuthentication(authentication);
+    SecurityContextHolder.getContext().setAuthentication(authentication); //untuk cek semacam role atau data auth di simpan sementara di BE
+    System.out.println("SecurityContextHolder.getContext()"+SecurityContextHolder.getContext());
     String jwt = jwtUtils.generateJwtToken(authentication);
-    
+    System.out.println("jwt "+jwt);
     UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();    
     List<String> roles = userDetails.getAuthorities().stream()
         .map(item -> item.getAuthority())

@@ -28,7 +28,7 @@ import com.bezkoder.springjwt.security.services.UserDetailsServiceImpl;
 // prePostEnabled = true) // by default
 public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
   @Autowired
-  UserDetailsServiceImpl userDetailsService;
+  UserDetailsServiceImpl userDetailsService; //bagian jwt mengetahui tabel mana yang di pakai login
 
   @Autowired
   private AuthEntryPointJwt unauthorizedHandler;
