@@ -32,6 +32,8 @@ import com.bezkoder.springjwt.repository.UserRepository;
 import com.bezkoder.springjwt.security.jwt.JwtUtils;
 import com.bezkoder.springjwt.security.services.UserDetailsImpl;
 
+import java.util.Map;
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
@@ -75,32 +77,47 @@ public class AuthController {
   }
 
   @PostMapping("/signup")
-  public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-    if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+  public ResponseEntity<?> registerUser(@RequestBody Map<String, Object> body) {
+
+    String username = body.get("username").toString();
+    String password = body.get("password").toString();
+    String email    = body.get("email").toString();
+    String name     = body.get("name").toString();
+
+    @SuppressWarnings("unchecked")
+    List<String> rolesList = (List<String>) body.get("role");
+    
+
+    if (userRepository.existsByUsername(username)) {
       return ResponseEntity
           .badRequest()
           .body(new MessageResponse("Error: Username is already taken!"));
     }
 
-    if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+    if (userRepository.existsByEmail(email)) {
       return ResponseEntity
           .badRequest()
           .body(new MessageResponse("Error: Email is already in use!"));
     }
 
     // Create new user's account
-    User user = new User(signUpRequest.getUsername(), 
-               signUpRequest.getEmail(),
-               encoder.encode(signUpRequest.getPassword()));
+    User user = new User(username, name, email, encoder.encode(password));
 
-    Set<String> strRoles = signUpRequest.getRole();
+
     Set<Role> roles = new HashSet<>();
+    Set<String> strRoles;
+    if (rolesList == null) {
+        strRoles = new HashSet<>();
+    } else {
+        strRoles = new HashSet<>(rolesList);
+    }
 
-    if (strRoles == null) {
+    if (strRoles.isEmpty() || strRoles == null) {
       Role userRole = roleRepository.findByName(ERole.ROLE_USER)
           .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
       roles.add(userRole);
-    } else {
+  }
+  else {
       strRoles.forEach(role -> {
         switch (role) {
         case "admin":

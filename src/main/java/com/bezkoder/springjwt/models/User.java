@@ -3,10 +3,32 @@ package com.bezkoder.springjwt.models;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
 public class User {
+    
+    // @ManyToMany(fetch = FetchType.LAZY)
+    // @JoinTable(  name = "user_roles", 
+    //         joinColumns = @JoinColumn(name = "user_id"), 
+    //         inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @Transient // 👈 JPA: abaikan field ini
+    private Set<Role> roles = new HashSet<>();
+p
+    public User(String username, String name,String email, String password) {
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+    public User() {
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    } 
 
     @Id
     @Column(name = "username", length = 50, nullable = false)
