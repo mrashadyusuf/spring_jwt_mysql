@@ -16,7 +16,7 @@ public class User {
     //         inverseJoinColumns = @JoinColumn(name = "role_id"))
     @Transient // 👈 JPA: abaikan field ini
     private Set<Role> roles = new HashSet<>();
-p
+
     public User(String username, String name,String email, String password) {
         this.username = username;
         this.name = name;
