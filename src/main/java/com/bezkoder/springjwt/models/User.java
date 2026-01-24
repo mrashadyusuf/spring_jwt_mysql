@@ -30,8 +30,12 @@ public class User {
         this.roles = roles;
     } 
 
+    
     @Id
-    @Column(name = "username", length = 50, nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    @Column(name = "username", length = 50, nullable = false, unique = true)
     private String username;
 
     @Column(name = "password", length = 255, nullable = false)
@@ -67,6 +71,9 @@ public class User {
        Getter & Setter
        ===================== */
 
+    public Long getId() {
+        return id;
+    }
     public String getUsername() {
         return username;
     }
